@@ -1393,8 +1393,10 @@
             { src: 'WhatsApp%20Image%202026-02-13%20at%2011.04.40%20PM.jpeg', caption: 'Every Moment With You 💝' },
         ];
 
+        const SLIDESHOW_ADVANCE_INTERVAL = 3500; // milliseconds
         let currentSlide = 0;
         let slideshowInterval = null;
+        let slideshowClickHandlerAdded = false;
 
         // Heart button starts the slideshow
         document.getElementById('heartTrigger').addEventListener('click', startSlideshow);
@@ -1429,15 +1431,18 @@
             // Auto-advance every 3.5 seconds
             slideshowInterval = setInterval(() => {
                 nextSlide();
-            }, 3500);
+            }, SLIDESHOW_ADVANCE_INTERVAL);
             
-            // Click/tap to advance
-            document.getElementById('photoSlideshow').addEventListener('click', (e) => {
-                if (e.target.id === 'heartTrigger') return;
-                clearInterval(slideshowInterval);
-                nextSlide();
-                slideshowInterval = setInterval(() => nextSlide(), 3500);
-            });
+            // Click/tap to advance (only add listener once)
+            if (!slideshowClickHandlerAdded) {
+                document.getElementById('photoSlideshow').addEventListener('click', (e) => {
+                    if (e.target.id === 'heartTrigger') return;
+                    clearInterval(slideshowInterval);
+                    nextSlide();
+                    slideshowInterval = setInterval(() => nextSlide(), SLIDESHOW_ADVANCE_INTERVAL);
+                });
+                slideshowClickHandlerAdded = true;
+            }
         }
 
         function showSlide(index) {
