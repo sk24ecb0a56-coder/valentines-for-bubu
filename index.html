@@ -214,6 +214,134 @@
         }
 
         /* ========================================
+           PHOTO SLIDESHOW OVERLAY
+           ======================================== */
+        #photoSlideshow {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 5000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #photoSlideshow.active {
+            display: flex;
+        }
+
+        .slideshow-instruction {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .heart-trigger {
+            font-size: 5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            animation: heartBeat 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.8));
+            transition: transform 0.3s ease;
+        }
+
+        .heart-trigger:hover {
+            transform: scale(1.2);
+        }
+
+        .slideshow-photo-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slideshow-photo-container.active {
+            display: flex;
+        }
+
+        .slideshow-photo-frame {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 80vw;
+            max-height: 70vh;
+            animation: photoFadeIn 1s ease;
+        }
+
+        .slideshow-photo-frame img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .slideshow-caption {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            animation: photoFadeIn 1s ease;
+        }
+
+        .slideshow-dots {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            position: absolute;
+            bottom: 30px;
+        }
+
+        .slideshow-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .slideshow-dot.active {
+            background: var(--gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .slideshow-hint {
+            position: absolute;
+            bottom: 60px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        @keyframes photoFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========================================
            STAGE 2: CELEBRATION PAGE
            ======================================== */
         #stage2 {
@@ -831,6 +959,21 @@
     </div>
 
     <!-- ========================================
+         PHOTO SLIDESHOW OVERLAY
+         ======================================== -->
+    <div id="photoSlideshow">
+        <div class="slideshow-instruction" id="slideshowInstruction">
+            Click on my heart to see our moments together 💖
+        </div>
+        <button class="heart-trigger" id="heartTrigger">💖</button>
+        <div class="slideshow-photo-container" id="slideshowContainer">
+            <!-- Photos will be dynamically inserted here -->
+        </div>
+        <div class="slideshow-dots" id="slideshowDots"></div>
+        <div class="slideshow-hint" id="slideshowHint">tap anywhere for next photo</div>
+    </div>
+
+    <!-- ========================================
          STAGE 2: CELEBRATION PAGE
          ======================================== -->
     <div id="stage2">
@@ -1184,13 +1327,10 @@
             // Create massive confetti explosion
             createConfettiExplosion();
             
-            // Transition to stage 2
+            // Transition to slideshow (not directly to stage 2)
             setTimeout(() => {
                 document.getElementById('stage1').classList.add('hidden');
-                document.getElementById('stage2').classList.add('visible');
-                
-                // Trigger animations for stage 2
-                animateStage2();
+                document.getElementById('photoSlideshow').classList.add('active');
             }, 2000);
         });
 
@@ -1236,6 +1376,119 @@
                         card.style.opacity = '1';
                     }, index * 100);
                 });
+            }, 1000);
+        }
+
+        // ========================================
+        // PHOTO SLIDESHOW
+        // ========================================
+        const slideshowPhotos = [
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2010.25.01%20PM.jpeg', caption: 'Our First Date 💕' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2010.25.23%20PM.jpeg', caption: 'My Favorite Smile 😊' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2010.28.22%20PM.jpeg', caption: 'Us Being Us 🤪' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2010.28.23%20PM.jpeg', caption: 'The Day I Knew ❤️' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2010.31.25%20PM(1).jpeg', caption: 'Adventure Together 🌍' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2011.04.39%20PM(1).jpeg', caption: 'Forever & Always 💍' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2011.04.40%20PM(1).jpeg', caption: 'You Light Up My World 🌟' },
+            { src: 'WhatsApp%20Image%202026-02-13%20at%2011.04.40%20PM.jpeg', caption: 'Every Moment With You 💝' },
+        ];
+
+        const SLIDESHOW_ADVANCE_INTERVAL = 3500; // milliseconds
+        let currentSlide = 0;
+        let slideshowInterval = null;
+        let slideshowClickHandlerAdded = false;
+
+        // Heart button starts the slideshow
+        document.getElementById('heartTrigger').addEventListener('click', startSlideshow);
+
+        function startSlideshow() {
+            // Hide instruction and heart button
+            document.getElementById('slideshowInstruction').style.display = 'none';
+            document.getElementById('heartTrigger').style.display = 'none';
+            
+            // Show slideshow container
+            const container = document.getElementById('slideshowContainer');
+            container.classList.add('active');
+            
+            // Create dots
+            const dotsContainer = document.getElementById('slideshowDots');
+            dotsContainer.innerHTML = '';
+            slideshowPhotos.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
+                dotsContainer.appendChild(dot);
+            });
+            
+            // Start music
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.play().catch(e => console.log('Music autoplay blocked:', e));
+            document.getElementById('musicToggle').textContent = '🎵';
+            musicPlaying = true;
+            
+            // Show first photo
+            showSlide(0);
+            
+            // Auto-advance every 3.5 seconds
+            slideshowInterval = setInterval(() => {
+                nextSlide();
+            }, SLIDESHOW_ADVANCE_INTERVAL);
+            
+            // Click/tap to advance (only add listener once)
+            if (!slideshowClickHandlerAdded) {
+                document.getElementById('photoSlideshow').addEventListener('click', (e) => {
+                    if (e.target.id === 'heartTrigger') return;
+                    clearInterval(slideshowInterval);
+                    nextSlide();
+                    slideshowInterval = setInterval(() => nextSlide(), SLIDESHOW_ADVANCE_INTERVAL);
+                });
+                slideshowClickHandlerAdded = true;
+            }
+        }
+
+        function showSlide(index) {
+            const container = document.getElementById('slideshowContainer');
+            const photo = slideshowPhotos[index];
+            
+            container.innerHTML = `
+                <div class="slideshow-photo-frame">
+                    <img src="${photo.src}" alt="${photo.caption}">
+                </div>
+                <div class="slideshow-caption">${photo.caption}</div>
+            `;
+            
+            // Update dots
+            document.querySelectorAll('.slideshow-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            document.getElementById('slideshowHint').style.display = 'block';
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            if (currentSlide >= slideshowPhotos.length) {
+                // Slideshow finished — transition to stage 2
+                endSlideshow();
+                return;
+            }
+            showSlide(currentSlide);
+        }
+
+        function endSlideshow() {
+            clearInterval(slideshowInterval);
+            
+            const slideshow = document.getElementById('photoSlideshow');
+            slideshow.style.transition = 'opacity 1s ease';
+            slideshow.style.opacity = '0';
+            
+            setTimeout(() => {
+                slideshow.classList.remove('active');
+                slideshow.style.opacity = '';
+                slideshow.style.transition = '';
+                
+                // Show stage 2
+                document.getElementById('stage2').classList.add('visible');
+                animateStage2();
             }, 1000);
         }
 
