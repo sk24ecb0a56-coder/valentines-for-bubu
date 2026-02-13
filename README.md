@@ -60,7 +60,7 @@ Replace all instances of "BUBU" with your Valentine's name:
 - Update the page title in `<title>` tag
 
 ### 2. Add Your Own Photos
-Find this section in the HTML (around line 835):
+Find this section in the HTML (around line 842):
 ```html
 <div class="photo-card">
     <div class="photo-placeholder">📷</div>
@@ -80,7 +80,7 @@ Replace `<div class="photo-placeholder">📷</div>` with:
 - Photos can be in the same folder or use full URLs
 
 ### 3. Customize the Love Letter
-Find the love letter section (around line 878) and edit the text inside:
+Find the love letter section (around line 881) and edit the text inside:
 ```html
 <p class="letter-text">
     <!-- Edit this content with your personal message -->
@@ -88,7 +88,7 @@ Find the love letter section (around line 878) and edit the text inside:
 ```
 
 ### 4. Modify "Reasons I Love You"
-Update the reason cards (around line 914):
+Update the reason cards (around line 918):
 ```html
 <div class="reason-text">🌟 Your own reason here</div>
 ```
@@ -98,7 +98,7 @@ Update the reason cards (around line 914):
 
 ### 5. Add Background Music
 1. Add your music file (MP3 format) to the project folder
-2. Update this line (around line 800):
+2. Update line 800:
 ```html
 <source src="your-music-file.mp3" type="audio/mpeg">
 ```
@@ -107,7 +107,7 @@ Replace `your-music-file.mp3` with your actual filename.
 **Note:** Most browsers require user interaction before playing audio, so users need to click the music toggle button.
 
 ### 6. Change Colors
-Update CSS variables in the `:root` section (around line 30):
+Update CSS variables in the `:root` section (around line 22):
 ```css
 :root {
     --deep-red: #ff1744;
