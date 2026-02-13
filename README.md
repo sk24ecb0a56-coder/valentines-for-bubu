@@ -60,7 +60,7 @@ Replace all instances of "BUBU" with your Valentine's name:
 - Update the page title in `<title>` tag
 
 ### 2. Add Your Own Photos
-Find this section in the HTML (around line 850):
+Find this section in the HTML (around line 835):
 ```html
 <div class="photo-card">
     <div class="photo-placeholder">📷</div>
@@ -80,7 +80,7 @@ Replace `<div class="photo-placeholder">📷</div>` with:
 - Photos can be in the same folder or use full URLs
 
 ### 3. Customize the Love Letter
-Find the love letter section (around line 910) and edit the text inside:
+Find the love letter section (around line 878) and edit the text inside:
 ```html
 <p class="letter-text">
     <!-- Edit this content with your personal message -->
@@ -88,7 +88,7 @@ Find the love letter section (around line 910) and edit the text inside:
 ```
 
 ### 4. Modify "Reasons I Love You"
-Update the reason cards (around line 945):
+Update the reason cards (around line 914):
 ```html
 <div class="reason-text">🌟 Your own reason here</div>
 ```
@@ -98,7 +98,7 @@ Update the reason cards (around line 945):
 
 ### 5. Add Background Music
 1. Add your music file (MP3 format) to the project folder
-2. Update this line (around line 685):
+2. Update this line (around line 800):
 ```html
 <source src="your-music-file.mp3" type="audio/mpeg">
 ```
@@ -120,9 +120,9 @@ Update CSS variables in the `:root` section (around line 30):
 ```
 
 ### 7. Modify Messages and Counters
-- **Celebration text** (line ~845): Change "Yayyyy! 🎉💕 I knew you'd say yes, BUBU!"
-- **Final promise** (line ~1030): Edit the closing message
-- **Counter labels** (line ~1015): Customize counter descriptions
+- **Celebration text** (line ~831): Change "Yayyyy! 🎉💕 I knew you'd say yes, BUBU!"
+- **Final promise** (line ~970): Edit the closing message
+- **Counter labels** (line ~951): Customize counter descriptions
 
 ## 📱 Mobile Optimization
 
