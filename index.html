@@ -1008,7 +1008,7 @@
         // ========================================
         function updateCountdown() {
             const now = new Date();
-            const valentinesDay = new Date(now.getFullYear(), 1, 14); // 1 = February (zero-indexed: 0=Jan, 1=Feb, etc.)
+            let valentinesDay = new Date(now.getFullYear(), 1, 14); // 1 = February (zero-indexed: 0=Jan, 1=Feb, etc.)
             
             // Check if today is Valentine's Day (date only, ignore time)
             if (now.getMonth() === 1 && now.getDate() === 14) {

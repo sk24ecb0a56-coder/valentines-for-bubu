@@ -80,7 +80,7 @@ Replace `<div class="photo-placeholder">📷</div>` with:
 - Photos can be in the same folder or use full URLs
 
 ### 3. Customize the Love Letter
-Find the love letter section (around line 881) and edit the text inside:
+Find the love letter section (around line 884) and edit the text inside:
 ```html
 <p class="letter-text">
     <!-- Edit this content with your personal message -->
