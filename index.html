@@ -999,9 +999,22 @@
         // ========================================
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
+                try {
+                    document.getElementById('loadingScreen').classList.add('hidden');
+                } catch(e) {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }
             }, 2000);
         });
+
+        // Fallback: force hide loading screen after 4 seconds no matter what
+        setTimeout(() => {
+            const ls = document.getElementById('loadingScreen');
+            if (ls) {
+                ls.classList.add('hidden');
+                ls.style.display = 'none';
+            }
+        }, 4000);
 
         // ========================================
         // COUNTDOWN TIMER
@@ -1020,16 +1033,15 @@
             if (now > valentinesDay) {
                 valentinesDay.setFullYear(valentinesDay.getFullYear() + 1);
             }
-                
-                const diff = valentinesDay - now;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                document.getElementById('countdown').textContent = 
-                    `💕 ${days}d ${hours}h ${minutes}m ${seconds}s until Valentine's Day 💕`;
-            }
+            
+            const diff = valentinesDay - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `💕 ${days}d ${hours}h ${minutes}m ${seconds}s until Valentine's Day 💕`;
         }
 
         updateCountdown();
